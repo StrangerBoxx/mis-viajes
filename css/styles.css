@@ -1,0 +1,88 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; }
+#app { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem; }
+
+/* ── Top bar ── */
+.top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 12px; }
+.title { font-size: 22px; font-weight: 600; color: #1a1a18; letter-spacing: -.3px; }
+
+/* ── Tabs ── */
+.panorama-tabs { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.tab { padding: 6px 14px; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; font-size: 13px; color: #666; background: #fff; transition: all .15s; }
+.tab.active { background: #e8e6e0; color: #1a1a18; font-weight: 600; border-color: #aaa; }
+.tab-add { padding: 6px 10px; border: 1px dashed #bbb; border-radius: 8px; cursor: pointer; font-size: 13px; color: #999; background: transparent; }
+.tab-add:hover { border-color: #888; color: #666; }
+
+/* ── Weekly grid ── */
+.grid-wrap { overflow-x: auto; border: 1px solid #ddd; border-radius: 12px; background: #fff; }
+table { width: 100%; border-collapse: collapse; min-width: 650px; table-layout: fixed; }
+th { font-size: 12px; font-weight: 600; color: #666; padding: 10px 8px; background: #f5f4f0; border-bottom: 1px solid #e0ddd8; text-align: center; position: sticky; top: 0; z-index: 2; }
+th:first-child { width: 72px; text-align: left; padding-left: 12px; }
+td { border: 1px solid #d5d0c8; padding: 3px; vertical-align: top; height: 36px; }
+td:first-child { font-size: 11px; color: #999; padding: 8px 8px 8px 12px; background: #faf9f6; font-weight: 600; white-space: nowrap; vertical-align: middle; }
+
+/* ── Activity blocks ── */
+.cell-inner { position: relative; width: 100%; height: 100%; min-height: 30px; }
+.activity-block { border-radius: 6px; padding: 4px 7px; font-size: 11px; font-weight: 600; cursor: grab; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; height: 100%; border: none; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 4px; transition: opacity .1s; }
+.activity-block:hover { opacity: .85; }
+.activity-block:active { cursor: grabbing; }
+.activity-block.dragging { opacity: .35; pointer-events: none; }
+.block-del { opacity: 0; font-size: 9px; flex-shrink: 0; cursor: pointer; padding: 0 2px; }
+.activity-block:hover .block-del { opacity: .7; }
+
+/* ── Add cell button ── */
+.cell-add { width: 100%; height: 100%; min-height: 30px; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .1s; }
+td:hover .cell-add { opacity: 1; }
+.cell-add-icon { font-size: 16px; color: #bbb; }
+
+/* ── Modal ── */
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 1rem; }
+.modal { background: #fff; border: 1px solid #ddd; border-radius: 14px; padding: 1.5rem; width: 340px; max-width: 100%; box-shadow: 0 8px 32px rgba(0,0,0,.12); }
+.modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 1rem; color: #1a1a18; }
+.modal label { font-size: 12px; color: #888; display: block; margin-bottom: 4px; margin-top: 12px; }
+.modal input, .modal textarea, .modal select { width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 8px 10px; font-size: 13px; font-family: inherit; background: #fff; color: #1a1a18; outline: none; }
+.modal input:focus, .modal textarea:focus { border-color: #aaa; }
+.modal textarea { resize: vertical; min-height: 70px; }
+
+/* ── Color swatches ── */
+.color-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.color-swatch { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform .1s; }
+.color-swatch.sel { border-color: #333; transform: scale(1.15); }
+
+/* ── Buttons ── */
+.modal-btns { display: flex; gap: 8px; margin-top: 1.25rem; justify-content: flex-end; }
+.btn { padding: 7px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; border: 1px solid #ddd; background: #fff; color: #1a1a18; font-family: inherit; }
+.btn.primary { background: #e8e6e0; font-weight: 600; border-color: #bbb; }
+.btn:hover { background: #f0ede8; }
+.btn.danger { color: #c0392b; border-color: #f5c6c6; }
+.btn.danger:hover { background: #fff0ee; }
+
+/* ── Section actions bar ── */
+.section-actions { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; flex-wrap: wrap; gap: 8px; }
+.section-label { font-size: 13px; color: #888; }
+
+/* ── Free-days view ── */
+.free-days-header { display: flex; align-items: center; justify-content: space-between; margin: 1rem 0 .75rem; }
+.day-card { border: 1px solid #e0ddd8; border-radius: 10px; margin-bottom: 10px; overflow: hidden; background: #fff; }
+.day-card-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #f5f4f0; }
+.day-card-head span { font-size: 13px; font-weight: 600; color: #1a1a18; }
+.day-card-body { padding: 8px 14px; }
+.free-activity { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #d5d0c8; }
+.free-activity:last-child { border-bottom: none; }
+.free-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.free-activity-text { font-size: 12px; flex: 1; color: #1a1a18; }
+.free-activity-time { font-size: 11px; color: #999; min-width: 38px; }
+.free-activity-del { font-size: 12px; color: #c0392b; cursor: pointer; opacity: .5; }
+.free-activity-del:hover { opacity: 1; }
+
+/* ── Type toggle ── */
+.type-toggle { display: flex; gap: 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
+.type-btn { flex: 1; padding: 7px 0; font-size: 12px; cursor: pointer; border: none; background: #fff; color: #888; font-family: inherit; }
+.type-btn.active { background: #e8e6e0; color: #1a1a18; font-weight: 600; }
+
+/* ── Empty state ── */
+.empty-state { text-align: center; padding: 2.5rem; color: #bbb; font-size: 13px; }
+
+/* ── Drag & Drop ── */
+.drag-ghost { position: fixed; pointer-events: none; z-index: 999; border-radius: 6px; padding: 4px 7px; font-size: 11px; font-weight: 600; white-space: nowrap; box-shadow: 0 4px 14px rgba(0,0,0,.18); transform: rotate(2deg); transition: none; }
+td.drop-target { background: #e8f4ff !important; outline: 2px dashed #7ab8f5; outline-offset: -2px; }

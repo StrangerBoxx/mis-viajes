@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Viajes — Planificador de Itinerarios</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div id="app">
+    <div class="top-bar">
+      <span class="title">🗺 Mis Viajes</span>
+      <div class="panorama-tabs" id="tabs"></div>
+    </div>
+    <div id="content"></div>
+  </div>
+
+  <div id="modal-bg" class="modal-bg" style="display:none">
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+
+  <!-- Configuración Firebase (editar js/firebase-config.js) -->
+  <script src="js/firebase-config.js"></script>
+
+  <!-- Model → View → Controller -->
+  <script src="js/model.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/controller.js"></script>
+
+</body>
+</html>

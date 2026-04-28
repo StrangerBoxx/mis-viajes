@@ -343,4 +343,3 @@ function initDrag() {
 
 // ── Arranque ───────────────────────────────────────────────
 initDrag();
-initSync();

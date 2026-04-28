@@ -67,39 +67,47 @@ const INITIAL_PANORAMAS = [{
 
 // ── Firebase ──────────────────────────────────────────────
 firebase.initializeApp(firebaseConfig);
-const _db      = firebase.firestore();
-const _docRef  = _db.collection('itinerarios').doc('viajes_planner');
+const _db = firebase.firestore();
 
 // ── Estado ────────────────────────────────────────────────
-// activePanorama es local por navegador; panoramas se sincronizan en tiempo real
+let currentUser  = null;
+let _unsubscribe = null;
+
 let state = {
-  panoramas:      JSON.parse(JSON.stringify(INITIAL_PANORAMAS)),
-  activePanorama: localStorage.getItem('viajes_active') || 'p1',
+  panoramas:      [],
+  activePanorama: '',
 };
 let _pendingRender = false;
 
 // ── Persistencia ──────────────────────────────────────────
 function save() {
+  if (!currentUser) return;
   localStorage.setItem('viajes_active', state.activePanorama);
-  _docRef.set({ panoramas: JSON.parse(JSON.stringify(state.panoramas)) })
+  _db.collection('users').doc(currentUser)
+    .update({ panoramas: JSON.parse(JSON.stringify(state.panoramas)) })
     .catch(e => console.error('Error al guardar:', e));
 }
 
-function initSync() {
+function initUserSync() {
+  if (!currentUser) return;
+  const userDoc = _db.collection('users').doc(currentUser);
+
+  state.activePanorama = localStorage.getItem('viajes_active') || '';
+
   document.getElementById('content').innerHTML =
     '<div class="empty-state">Conectando…</div>';
 
-  _docRef.onSnapshot(snap => {
+  if (_unsubscribe) _unsubscribe();
+
+  _unsubscribe = userDoc.onSnapshot(snap => {
     if (snap.exists) {
       state.panoramas = snap.data().panoramas || [];
-      // Si el panorama activo fue eliminado por otro usuario, ir al primero
       if (state.panoramas.length &&
           !state.panoramas.find(p => p.id === state.activePanorama)) {
         state.activePanorama = state.panoramas[0].id;
         localStorage.setItem('viajes_active', state.activePanorama);
       }
     } else {
-      // Primera vez: subir datos de ejemplo
       save();
       return;
     }
